@@ -1,0 +1,6 @@
+*_venv
+node_modules
+logs
+.env
+DeepSight/
+DeepSight_UI/
