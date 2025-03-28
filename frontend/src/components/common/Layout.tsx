@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 const MainContent = styled(Box)({
   flexGrow: 1,
   padding: '24px',
-  marginLeft: '334px',
+  marginLeft: '200px',
   backgroundColor: '#FFFFFF',
   minHeight: '100vh',
 });
