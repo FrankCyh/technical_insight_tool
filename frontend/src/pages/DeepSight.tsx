@@ -282,7 +282,7 @@ export const DeepSight: React.FC = () => {
         {papers.map((paper) => (
           <Grid item xs={12} sm={6} md={4} key={paper.id}>
             <PaperCard>
-              <PaperImage src={`/src/assets/img/paper/paper${parseInt(paper.id) % 3}.svg`} alt={paper.title} />
+              <PaperImage src={`/public/assets/img/paper/paper${parseInt(paper.id) % 3}.svg`} alt={paper.title} />
               <PaperContent>
                 <PaperTitle>{paper.title}</PaperTitle>
                 <PaperDescription>{paper.abstract}</PaperDescription>

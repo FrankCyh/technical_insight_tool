@@ -61,14 +61,14 @@ export const Header: React.FC = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Logo src="/src/assets/img/cari-digital-logo.svg" alt="CARI Digital Logo" />
+        <Logo src="/public/assets/img/cari-digital-logo.svg" alt="CARI Digital Logo" />
         <LanguageSelector>
           <LanguageOption>
-            <img src="/src/assets/img/icons8-美国-48.svg" alt="English" width={32} height={32} />
+            <img src="/public/assets/img/icons8-美国-48.svg" alt="English" width={32} height={32} />
             <LanguageText>English</LanguageText>
           </LanguageOption>
           <LanguageOption>
-            <img src="/src/assets/img/icons8-中国-48.svg" alt="简体中文" width={32} height={32} />
+            <img src="/public/assets/img/icons8-中国-48.svg" alt="简体中文" width={32} height={32} />
             <LanguageText>简体中文</LanguageText>
           </LanguageOption>
         </LanguageSelector>

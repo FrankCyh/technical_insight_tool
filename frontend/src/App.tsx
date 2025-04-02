@@ -6,6 +6,7 @@ import { Layout } from './components/common/Layout';
 import { DeepSight } from './pages/DeepSight';
 import { DailyPaper } from './pages/DailyPaper';
 import { DailyNews } from './pages/DailyNews';
+import { DeepDive } from './pages/DeepDive';
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,10 @@ function App() {
                           <Route
                               path='/dailynews'
                               element={<DailyNews />}
+                          />
+                          <Route
+                              path='/deepdive'
+                              element={<DeepDive />}
                           />
                       </Routes>
                   </Layout>

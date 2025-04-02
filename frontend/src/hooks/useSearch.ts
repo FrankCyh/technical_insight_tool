@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { paperService, PaperFilters } from '../services/paperService';
-import { Paper } from '../services/api';
+// import { Paper } from '../services/api';
 
 export const useSearch = () => {
   const [filters, setFilters] = useState<PaperFilters>({});

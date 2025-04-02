@@ -1,8 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
+import random
+from pathlib import Path
 
 app = FastAPI(
     title="DeepSight API",
@@ -52,12 +54,16 @@ class Paper(BaseModel):
     citations: int
     organization: str
 
+class ChatMessage(BaseModel):
+    message: str
+    response: str
+
 # Dummy data
 DUMMY_CONFERENCES = [
     Conference(
         id="1",
         name='ICSE',
-        logo='/src/assets/img/conference/ICSE.svg',
+        logo='/public/assets/img/conference/ICSE.svg',
         description='ICSE description.',
         totalPapers=5000,
         averageCitation=25.5,
@@ -72,7 +78,7 @@ DUMMY_CONFERENCES = [
     Conference(
         id="2",
         name='FSE',
-        logo='/src/assets/img/conference/FSE.svg',
+        logo='/public/assets/img/conference/FSE.svg',
         description='FSE description.',
         totalPapers=4200,
         averageCitation=23.8,
@@ -87,7 +93,7 @@ DUMMY_CONFERENCES = [
     Conference(
         id="3",
         name='ASE',
-        logo='/src/assets/img/conference/ASE.svg',
+        logo='/public/assets/img/conference/ASE.svg',
         description='ASE description.',
         totalPapers=3800,
         averageCitation=22.1,
@@ -102,7 +108,7 @@ DUMMY_CONFERENCES = [
     Conference(
         id="4",
         name='ISSTA',
-        logo='/src/assets/img/conference/ISSTA.svg',
+        logo='/public/assets/img/conference/ISSTA.svg',
         description='ISSTA description.',
         totalPapers=3200,
         averageCitation=20.2,
@@ -117,7 +123,7 @@ DUMMY_CONFERENCES = [
     Conference(
         id="5",
         name='ICSME',
-        logo='/src/assets/img/conference/ICSME.svg',
+        logo='/public/assets/img/conference/ICSME.svg',
         description='ICSME description.',
         totalPapers=3500,
         averageCitation=21.5,
@@ -268,6 +274,40 @@ async def get_organization_stats():
             for conf in set(conf for o in DUMMY_ORGANIZATIONS for conf in o.conferences)
         }
     }
+
+@app.post("/api/v1/chat", response_model=ChatMessage)
+async def chat(message: ChatMessage):
+    # Dummy responses based on keywords in the message
+    responses = [
+        "Based on the paper's methodology, this approach shows promising results in improving model performance.",
+        "The authors demonstrate significant improvements over baseline methods, achieving a 15% increase in accuracy.",
+        "This research builds upon previous work in the field, particularly citing developments in transformer architectures.",
+        "The key innovation appears to be their novel architecture design, which reduces computational complexity.",
+        "According to the experimental results, the proposed method outperforms existing solutions in both efficiency and accuracy."
+    ]
+    
+    return ChatMessage(
+        message=message.message,
+        response=random.choice(responses)
+    )
+
+@app.get("/api/v1/audio")
+async def get_audio():
+    # For demo purposes, we'll serve a static audio file
+    audio_path = Path(__file__).parent.parent / "frontend/public/assets/audio/new-divide.mp3"
+    
+    if not audio_path.exists():
+        return Response(content="Audio file not found", status_code=404)
+        
+    audio_bytes = audio_path.read_bytes()
+    return Response(
+        content=audio_bytes,
+        media_type="audio/mpeg",
+        headers={
+            "Content-Disposition": "inline",
+            "Accept-Ranges": "bytes",
+        }
+    )
 
 if __name__ == "__main__":
     import uvicorn

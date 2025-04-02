@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { styled } from '@mui/material/styles';
 
-const MainContent = styled(Box)({
+interface MainContentProps {
+  isSidebarOpen: boolean;
+}
+
+const MainContent = styled(Box)<MainContentProps>(({ isSidebarOpen }) => ({
   flexGrow: 1,
   padding: '24px',
-  marginLeft: '200px',
+  marginLeft: isSidebarOpen ? '10px' : '60px',
+  transition: 'margin-left 0.3s ease',
   backgroundColor: '#FFFFFF',
   minHeight: '100vh',
-});
+}));
 
 const ContentContainer = styled(Container)({
   marginTop: '200px',
@@ -22,11 +27,17 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handleSidebarToggle = (isOpen: boolean) => {
+    setIsSidebarOpen(isOpen);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Header />
-      <Sidebar />
-      <MainContent>
+      <Sidebar onToggle={handleSidebarToggle} />
+      <MainContent isSidebarOpen={isSidebarOpen}>
         <ContentContainer maxWidth={false}>
           {children}
         </ContentContainer>
